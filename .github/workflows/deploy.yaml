@@ -71,7 +71,7 @@ jobs:
             -backend-config="workspace_key_prefix=${{ env.WORKSPACE_KEY_PREFIX }}"
 
   terraform-plan:
-    needs: terraform-init
+    needs: [terraform-init, set-env]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -90,7 +90,7 @@ jobs:
         run: terraform plan -var-file=vars_${{ needs.set-env.outputs.workspace }}.tfvars -out=tfplan
 
   terraform-apply:
-    needs: terraform-plan
+    needs: [terraform-init, set-env]
     if: ${{ github.ref_name == 'dev' || github.ref_name == 'main' || github.event.inputs.promote_to }}
     runs-on: ubuntu-latest
     steps:
