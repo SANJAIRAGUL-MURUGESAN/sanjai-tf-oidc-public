@@ -1,4 +1,4 @@
-name: Terraform Deploy
+name: Terraform CI/CD
 
 on:
   push:
@@ -6,22 +6,46 @@ on:
       - dev
       - main
 
+  workflow_dispatch:
+    inputs:
+      promote_to:
+        description: "Environment to promote to (preprod or prod)"
+        required: true
+        type: choice
+        options:
+          - preprod
+          - prod
+
 env:
   AWS_REGION: us-east-1
-  STATE_BUCKET_NAME: sanjai-dev-tf-state
-  DYNAMODB_TABLE_NAME: sanjai-dev-tf-stat
   WORKSPACE_KEY_PREFIX: s3-frontend
 
 jobs:
-  terraform:
+  set-env:
     runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        shell: bash
-
+    outputs:
+      workspace: ${{ steps.setenv.outputs.workspace }}
+      aws_account: ${{ steps.setenv.outputs.aws_account }}
     steps:
-      - name: Checkout repository
+      - name: Set Terraform environment
+        id: setenv
+        run: |
+          if [[ "${{ github.ref_name }}" == "dev" ]]; then
+            echo "workspace=dev" >> $GITHUB_OUTPUT
+            echo "aws_account=A" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref_name }}" == "main" ]]; then
+            echo "workspace=qa" >> $GITHUB_OUTPUT
+            echo "aws_account=A" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "workspace=${{ github.event.inputs.promote_to }}" >> $GITHUB_OUTPUT
+            echo "aws_account=B" >> $GITHUB_OUTPUT
+          fi
+
+  terraform-init:
+    needs: set-env
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
         uses: actions/checkout@v3
 
       - name: Setup Terraform
@@ -29,39 +53,44 @@ jobs:
         with:
           terraform_version: 1.6.6
 
-      - name: Set environment from branch
-        id: env
-        run: |
-          if [[ "${GITHUB_REF##*/}" == "main" ]]; then
-            echo "env=qa" >> "$GITHUB_OUTPUT"
-          else
-            echo "env=dev" >> "$GITHUB_OUTPUT"
-          fi
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-access-key-id: ${{ secrets[needs.set-env.outputs.aws_account == 'A' && 'AWS_A_ACCESS_KEY_ID' || 'AWS_B_ACCESS_KEY_ID'] }}
+          aws-secret-access-key: ${{ secrets[needs.set-env.outputs.aws_account == 'A' && 'AWS_A_SECRET_ACCESS_KEY' || 'AWS_B_SECRET_ACCESS_KEY'] }}
+          aws-session-token: ${{ secrets[needs.set-env.outputs.aws_account == 'A' && 'AWS_A_SESSION_TOKEN' || 'AWS_B_SESSION_TOKEN'] }}
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Terraform Init
         run: |
           terraform init \
-            -backend-config="bucket=${{ env.STATE_BUCKET_NAME }}" \
-            -backend-config="key=${{ steps.env.outputs.env }}/terraform.tfstate" \
+            -backend-config="bucket=${{ secrets[needs.set-env.outputs.aws_account == 'A' && 'STATE_BUCKET_NAME_A' || 'STATE_BUCKET_NAME_B'] }}" \
+            -backend-config="key=${{ needs.set-env.outputs.workspace }}/terraform.tfstate" \
             -backend-config="region=${{ env.AWS_REGION }}" \
-            -backend-config="dynamodb_table=${{ env.DYNAMODB_TABLE_NAME }}" \
+            -backend-config="dynamodb_table=${{ secrets[needs.set-env.outputs.aws_account == 'A' && 'DYNAMODB_TABLE_NAME_A' || 'DYNAMODB_TABLE_NAME_B'] }}" \
             -backend-config="workspace_key_prefix=${{ env.WORKSPACE_KEY_PREFIX }}"
+
+  terraform-plan:
+    needs: terraform-init
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Select or Create Workspace
         run: |
-          terraform workspace select ${{ steps.env.outputs.env }} || terraform workspace new ${{ steps.env.outputs.env }}
+          terraform workspace select ${{ needs.set-env.outputs.workspace }} || terraform workspace new ${{ needs.set-env.outputs.workspace }}
 
       - name: Terraform Plan
-        run: terraform plan -var-file=vars_${{ steps.env.outputs.env }}.tfvars -out=tfplan
+        run: terraform plan -var-file=vars_${{ needs.set-env.outputs.workspace }}.tfvars -out=tfplan
+
+  terraform-apply:
+    needs: terraform-plan
+    if: ${{ github.ref_name == 'dev' || github.ref_name == 'main' || github.event.inputs.promote_to }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'
         run: terraform apply -input=false tfplan
