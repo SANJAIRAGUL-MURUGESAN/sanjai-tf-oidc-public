@@ -48,8 +48,13 @@ jobs:
   terraform:
     needs: set-env
     runs-on: ubuntu-latest
+
+    # 👇 This line enables GitHub Environments for manual approval
     environment:
       name: ${{ needs.set-env.outputs.environment_name }}
+      # Approval only needed if environment is preprod or prod
+      url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
