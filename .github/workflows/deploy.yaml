@@ -11,8 +11,8 @@ permissions:
   contents: read
 
 env:
-  AWS_REGION_ACCOUNT_A: us-east-1
-  AWS_REGION_ACCOUNT_B: eu-north-1
+  AWS_REGION_ACCOUNT_A: eu-north-1
+  AWS_REGION_ACCOUNT_B: us-east-1
   WORKSPACE_KEY_PREFIX: s3-frontend
 
 jobs:
