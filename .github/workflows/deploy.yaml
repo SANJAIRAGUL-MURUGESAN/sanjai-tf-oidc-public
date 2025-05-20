@@ -31,7 +31,7 @@ jobs:
       - name: Configure AWS credentials using OIDC
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::853973692277:role/sanjai-oidc
+          role-to-assume: arn:aws:iam::853973692277:role/sanjai-oidc-2
           aws-region: ${{ env.AWS_REGION_ACCOUNT_A }}
 
       - name: Terraform Init
@@ -67,7 +67,7 @@ jobs:
       - name: Configure AWS credentials using OIDC
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::853973692277:role/sanjai-oidc
+          role-to-assume: arn:aws:iam::853973692277:role/sanjai-oidc-2
           aws-region: ${{ env.AWS_REGION_ACCOUNT_A }}
 
       - name: Terraform Init
