@@ -29,9 +29,7 @@ jobs:
       - name: Configure AWS Credentials (Account A)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_A_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_A_SECRET_ACCESS_KEY }}
-          aws-session-token: ${{ secrets.AWS_A_SESSION_TOKEN }}
+          role-to-assume: arn:aws:iam::615719431409:role/sanjai-oidc
           aws-region: ${{ env.AWS_REGION_ACCOUNT_A }}
 
       - name: Terraform Init
@@ -69,9 +67,7 @@ jobs:
       - name: Configure AWS Credentials (Account A)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_A_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_A_SECRET_ACCESS_KEY }}
-          aws-session-token: ${{ secrets.AWS_A_SESSION_TOKEN }}
+          role-to-assume: arn:aws:iam::853973692277:role/sanjai-oidc
           aws-region: ${{ env.AWS_REGION_ACCOUNT_A }}
 
       - name: Terraform Init
@@ -109,9 +105,7 @@ jobs:
       - name: Configure AWS Credentials (Account B)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_B_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_B_SECRET_ACCESS_KEY }}
-          aws-session-token: ${{ secrets.AWS_B_SESSION_TOKEN }}
+          role-to-assume: arn:aws:iam::853973692277:role/sanjai-oidc
           aws-region: ${{ env.AWS_REGION_ACCOUNT_B }}
 
       - name: Terraform Init
@@ -149,9 +143,7 @@ jobs:
       - name: Configure AWS Credentials (Account B)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_B_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_B_SECRET_ACCESS_KEY }}
-          aws-session-token: ${{ secrets.AWS_B_SESSION_TOKEN }}
+          role-to-assume: arn:aws:iam::853973692277:role/sanjai-oidc
           aws-region: ${{ env.AWS_REGION_ACCOUNT_B }}
 
       - name: Terraform Init
