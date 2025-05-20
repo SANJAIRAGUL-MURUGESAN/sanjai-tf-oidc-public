@@ -16,4 +16,3 @@ variable "bucket_acl" {
   default     = "private"
 }
 
-//add
