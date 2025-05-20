@@ -1,1 +1,1 @@
-bucket_name = "sanjai-workspace-infra-qa"
+bucket_name = "sanjai-workspace-infra-dev"
