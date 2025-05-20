@@ -3,6 +3,7 @@ name: Terraform Promotion Pipeline
 on:
   push:
     branches:
+      - dev
       - main
 
 env:
@@ -11,13 +12,11 @@ env:
   WORKSPACE_KEY_PREFIX: s3-frontend
 
 jobs:
-  qa:
+  dev:
+    if: github.ref_name == 'dev'
     runs-on: ubuntu-latest
     environment:
-      name: qa
-    outputs:
-      workspace: qa
-      aws_account: A
+      name: dev
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -27,7 +26,47 @@ jobs:
         with:
           terraform_version: 1.6.6
 
-      - name: Configure AWS credentials
+      - name: Configure AWS Credentials (Account A)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_A_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_A_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_A_SESSION_TOKEN }}
+          aws-region: ${{ env.AWS_REGION_ACCOUNT_A }}
+
+      - name: Terraform Init
+        run: |
+          terraform init \
+            -backend-config="bucket=${{ secrets.STATE_BUCKET_NAME_A }}" \
+            -backend-config="key=dev/terraform.tfstate" \
+            -backend-config="region=${{ env.AWS_REGION_ACCOUNT_A }}" \
+            -backend-config="dynamodb_table=${{ secrets.DYNAMODB_TABLE_NAME_A }}" \
+            -backend-config="workspace_key_prefix=${{ env.WORKSPACE_KEY_PREFIX }}"
+
+      - name: Select or Create Workspace
+        run: terraform workspace select dev || terraform workspace new dev
+
+      - name: Terraform Plan
+        run: terraform plan -var-file=vars_dev.tfvars -out=tfplan
+
+      - name: Terraform Apply
+        run: terraform apply -input=false tfplan
+
+  qa:
+    if: github.ref_name == 'main'
+    runs-on: ubuntu-latest
+    environment:
+      name: qa
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.6.6
+
+      - name: Configure AWS Credentials (Account A)
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_A_ACCESS_KEY_ID }}
@@ -57,7 +96,7 @@ jobs:
     needs: qa
     runs-on: ubuntu-latest
     environment:
-      name: preprod 
+      name: preprod
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -67,7 +106,7 @@ jobs:
         with:
           terraform_version: 1.6.6
 
-      - name: Configure AWS credentials
+      - name: Configure AWS Credentials (Account B)
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_B_ACCESS_KEY_ID }}
@@ -97,7 +136,7 @@ jobs:
     needs: preprod
     runs-on: ubuntu-latest
     environment:
-      name: prod 
+      name: prod
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -107,7 +146,7 @@ jobs:
         with:
           terraform_version: 1.6.6
 
-      - name: Configure AWS credentials
+      - name: Configure AWS Credentials (Account B)
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_B_ACCESS_KEY_ID }}
