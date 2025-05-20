@@ -17,4 +17,3 @@ variable "bucket_acl" {
 }
 
 
-//asssds
