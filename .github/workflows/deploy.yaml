@@ -56,7 +56,7 @@ jobs:
     needs: qa
     runs-on: ubuntu-latest
     environment:
-      name: preprod # 👈 Setup this in GitHub repo with required reviewers
+      name: preprod 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -96,7 +96,7 @@ jobs:
     needs: preprod
     runs-on: ubuntu-latest
     environment:
-      name: prod # 👈 Setup this in GitHub repo with required reviewers
+      name: prod 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
