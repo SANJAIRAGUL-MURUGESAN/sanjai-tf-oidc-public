@@ -11,8 +11,8 @@ permissions:
   contents: read
 
 env:
-  AWS_REGION_ACCOUNT_A: eu-north-1
-  AWS_REGION_ACCOUNT_B: us-east-1
+  AWS_REGION_ACCOUNT_A: us-east-1
+  AWS_REGION_ACCOUNT_B: eu-north-1
   WORKSPACE_KEY_PREFIX: s3-frontend
 
 jobs:
@@ -33,7 +33,7 @@ jobs:
       - name: Configure AWS Credentials (Account A)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::615719431409:role/sanjai-oidc
+          role-to-assume: arn:aws:iam::853973692277:role/sanjai-oidc-2
           aws-region: ${{ env.AWS_REGION_ACCOUNT_A }}
 
       - name: Terraform Init
@@ -109,7 +109,7 @@ jobs:
       - name: Configure AWS Credentials (Account B)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::853973692277:role/sanjai-oidc-2
+          role-to-assume: arn:aws:iam::615719431409:role/sanjai-oidc
           aws-region: ${{ env.AWS_REGION_ACCOUNT_B }}
 
       - name: Terraform Init
@@ -147,7 +147,7 @@ jobs:
       - name: Configure AWS Credentials (Account B)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::853973692277:role/sanjai-oidc-2
+          role-to-assume: arn:aws:iam::615719431409:role/sanjai-oidc
           aws-region: ${{ env.AWS_REGION_ACCOUNT_B }}
 
       - name: Terraform Init
