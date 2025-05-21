@@ -10,11 +10,6 @@ permissions:
   id-token: write
   contents: read
 
-env:
-  AWS_REGION_ACCOUNT_A: us-east-1
-  AWS_REGION_ACCOUNT_B: eu-north-1
-  WORKSPACE_KEY_PREFIX: s3-frontend
-
 jobs:
   dev:
     if: github.ref_name == 'dev'
