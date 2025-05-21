@@ -32,16 +32,16 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::853973692277:role/sanjai-oidc-2
-          aws-region: ${{ env.AWS_REGION_ACCOUNT_A }}
+          aws-region: ${{ vars.AWS_REGION_ACCOUNT_A }}
 
       - name: Terraform Init
         run: |
           terraform init \
             -backend-config="bucket=${{ vars.STATE_BUCKET_NAME_A }}" \
             -backend-config="key=dev/terraform.tfstate" \
-            -backend-config="region=${{ env.AWS_REGION_ACCOUNT_A }}" \
+            -backend-config="region=${{ vars.AWS_REGION_ACCOUNT_A }}" \
             -backend-config="dynamodb_table=${{ vars.DYNAMODB_TABLE_NAME_A }}" \
-            -backend-config="workspace_key_prefix=${{ env.WORKSPACE_KEY_PREFIX }}"
+            -backend-config="workspace_key_prefix=${{ vars.WORKSPACE_KEY_PREFIX }}"
 
       - name: Select or Create Workspace
         run: terraform workspace select dev || terraform workspace new dev
@@ -68,16 +68,16 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::853973692277:role/sanjai-oidc-2
-          aws-region: ${{ env.AWS_REGION_ACCOUNT_A }}
+          aws-region: ${{ vars.AWS_REGION_ACCOUNT_A }}
 
       - name: Terraform Init
         run: |
           terraform init \
             -backend-config="bucket=${{ vars.STATE_BUCKET_NAME_A }}" \
             -backend-config="key=qa/terraform.tfstate" \
-            -backend-config="region=${{ env.AWS_REGION_ACCOUNT_A }}" \
+            -backend-config="region=${{ vars.AWS_REGION_ACCOUNT_A }}" \
             -backend-config="dynamodb_table=${{ vars.DYNAMODB_TABLE_NAME_A }}" \
-            -backend-config="workspace_key_prefix=${{ env.WORKSPACE_KEY_PREFIX }}"
+            -backend-config="workspace_key_prefix=${{ vars.WORKSPACE_KEY_PREFIX }}"
 
       - name: Select or Create Workspace
         run: terraform workspace select qa || terraform workspace new qa
@@ -112,16 +112,16 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::615719431409:role/sanjai-oidc
-          aws-region: ${{ env.AWS_REGION_ACCOUNT_B }}
+          aws-region: ${{ vars.AWS_REGION_ACCOUNT_B }}
 
       - name: Terraform Init
         run: |
           terraform init \
             -backend-config="bucket=${{ vars.STATE_BUCKET_NAME_B }}" \
             -backend-config="key=preprod/terraform.tfstate" \
-            -backend-config="region=${{ env.AWS_REGION_ACCOUNT_B }}" \
+            -backend-config="region=${{ vars.AWS_REGION_ACCOUNT_B }}" \
             -backend-config="dynamodb_table=${{ vars.DYNAMODB_TABLE_NAME_B }}" \
-            -backend-config="workspace_key_prefix=${{ env.WORKSPACE_KEY_PREFIX }}"
+            -backend-config="workspace_key_prefix=${{ vars.WORKSPACE_KEY_PREFIX }}"
 
       - name: Select or Create Workspace
         run: terraform workspace select preprod || terraform workspace new preprod
@@ -156,16 +156,16 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::615719431409:role/sanjai-oidc
-          aws-region: ${{ env.AWS_REGION_ACCOUNT_B }}
+          aws-region: ${{ vars.AWS_REGION_ACCOUNT_B }}
 
       - name: Terraform Init
         run: |
           terraform init \
             -backend-config="bucket=${{ vars.STATE_BUCKET_NAME_B }}" \
             -backend-config="key=prod/terraform.tfstate" \
-            -backend-config="region=${{ env.AWS_REGION_ACCOUNT_B }}" \
+            -backend-config="region=${{ vars.AWS_REGION_ACCOUNT_B }}" \
             -backend-config="dynamodb_table=${{ vars.DYNAMODB_TABLE_NAME_B }}" \
-            -backend-config="workspace_key_prefix=${{ env.WORKSPACE_KEY_PREFIX }}"
+            -backend-config="workspace_key_prefix=${{ vars.WORKSPACE_KEY_PREFIX }}"
 
       - name: Select or Create Workspace
         run: terraform workspace select prod || terraform workspace new prod
