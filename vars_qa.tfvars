@@ -11,3 +11,5 @@ origin_shield_value = true
 restriction_type = "blacklist"
 geo_restriction_locations =  ["CN"]
 aliases = [ "sanjairagulm.com" ]
+
+//add
