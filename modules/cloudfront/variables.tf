@@ -1,35 +1,12 @@
-// Variables for s3
-variable "aws_region" {
-  description = "AWS region"
-  type        = string
-  default     = "us-east-1"
-}
-
-variable "bucket_name" {
-  description = "The name of the S3 bucket"
-  type        = string
-  default = "sanjai-oidc"
-}
-
-variable "object_ownership" {
-  description = "Ownership of the project"
+variable "s3_domain_name" {
   type = string
+  description = "Name of the S3 Domain"
 }
 
-variable "versioning_configuration" {
-  description = "Boolean Value fot Bucket Versioning Configuration"
-  type = bool
-  default = true
-}
-
-// Variables for OAC
-
-variable "oac_name" {
+variable "origin_access_control_id" {
   type = string
-  description = "Name of the Open Control Access"  
+  description = "ID of the Origin Access Control Created"
 }
-
-// Variables for CloudFront
 
 variable "origin_id" {
   type = string
@@ -82,5 +59,3 @@ variable "price_class" {
   type = string
   description = "Price Class for the Edge Location"
 }
-
-//

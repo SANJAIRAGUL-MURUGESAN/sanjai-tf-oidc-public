@@ -1,10 +1,21 @@
 variable "bucket_name" {
-  description = "The name of the S3 bucket"
+  description = "Name of the S3 bucket"
   type        = string
 }
 
-variable "acl" {
-  description = "Canned ACL to apply"
-  type        = string
-  default     = "private"
+variable "force_destroy" {
+  description = "Whether to force destroy the bucket even if it contains objects"
+  type        = bool
+  default     = false
+}
+
+variable "object_ownership" {
+  description = "Ownership of the project"
+  type = string
+}
+
+variable "versioning_configuration" {
+  description = "Boolean Value fot Bucket Versioning Configuration"
+  type = bool
+  default = true
 }
