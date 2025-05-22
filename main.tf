@@ -33,5 +33,5 @@ module "s3_bucket_policy" {
   source                    = "./modules/s3_bucket_policy"
   bucket_id                 = module.s3.bucket_id
   bucket_arn                = module.s3.bucket_arn
-  cloudfront_distribution_arn = module.cloudfront.distribution_arn
+  cloudfront_distribution_arn = module.cloudfront.cloudfront_distribution_arn
 }
