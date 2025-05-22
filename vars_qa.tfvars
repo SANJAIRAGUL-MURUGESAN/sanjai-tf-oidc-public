@@ -11,7 +11,12 @@ origin_shield_value = true
 restriction_type = "blacklist"
 geo_restriction_locations =  ["CN"]
 aliases = [ "sanjairagulm.com" ]
-tags = {
+s3_tags = {
+  Environment = "qa"
+  Owner       = "TDKSensEI"
+  Project     = "frontend-dashboard"
+}
+cloudcloudfront_tags = {
   Environment = "qa"
   Owner       = "TDKSensEI"
   Project     = "frontend-dashboard"

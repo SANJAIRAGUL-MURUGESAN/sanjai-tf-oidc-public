@@ -24,7 +24,7 @@ variable "versioning_configuration" {
 
 variable "s3_tags" {
   type        = map(string)
-  description = "Common tags for all resources."
+  description = "Tags to apply to s3 Bucket"
 }
 
 
@@ -91,7 +91,7 @@ variable "price_class" {
 
 variable "cloudfront_tags" {
   type        = map(string)
-  description = "Tags to apply to CloudFront Distribution."
+  description = "Tags to apply to CloudFront Distribution"
   default     = {}
 }
 
