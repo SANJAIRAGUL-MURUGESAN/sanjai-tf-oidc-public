@@ -8,7 +8,7 @@ resource "aws_cloudfront_distribution" "this" {
   tags = var.cloudfront_tags 
 
   origin {
-    domain_name              = local.domain_name
+    domain_name              = var.s3_domain_name
     origin_id                = var.origin_id
     origin_access_control_id = var.origin_access_control_id
     
