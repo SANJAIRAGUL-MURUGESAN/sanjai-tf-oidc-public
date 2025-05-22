@@ -18,8 +18,7 @@ variable "object_ownership" {
 
 variable "versioning_configuration" {
   description = "Boolean Value fot Bucket Versioning Configuration"
-  type = bool
-  default = true
+  type = string
 }
 
 variable "s3_tags" {

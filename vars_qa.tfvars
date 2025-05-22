@@ -1,6 +1,6 @@
 bucket_name = "sanjai-workspace-infra-qa"
 object_ownership = "BucketOwnerEnforced"
-versioning_configuration = true
+versioning_configuration = "Enabled"
 oac_name = "sanjai-oac"
 root_object = "index.html"
 price_class = "PriceClass_100"
@@ -16,7 +16,7 @@ s3_tags = {
   Owner       = "TDKSensEI"
   Project     = "frontend-dashboard"
 }
-cloudcloudfront_tags = {
+cloudfront_tags = {
   Environment = "qa"
   Owner       = "TDKSensEI"
   Project     = "frontend-dashboard"
