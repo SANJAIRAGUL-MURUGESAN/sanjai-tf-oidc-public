@@ -25,6 +25,7 @@ module "cloudfront" {
   origin_shield_region      = var.origin_shield_region
   origin_shield_value       = var.origin_shield_value
   restriction_type          = var.restriction_type
+  aliases = var.aliases
   geo_restriction_locations = var.geo_restriction_locations
 }
 
