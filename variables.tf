@@ -22,6 +22,12 @@ variable "versioning_configuration" {
   default = true
 }
 
+variable "s3_tags" {
+  type        = map(string)
+  description = "Common tags for all resources."
+}
+
+
 // Variables for OAC
 
 variable "oac_name" {
@@ -81,6 +87,12 @@ variable "root_object" {
 variable "price_class" {
   type = string
   description = "Price Class for the Edge Location"
+}
+
+variable "cloudfront_tags" {
+  type        = map(string)
+  description = "Tags to apply to CloudFront Distribution."
+  default     = {}
 }
 
 //

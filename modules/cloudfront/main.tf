@@ -1,7 +1,14 @@
+locals {
+  domain_name = "${var.s3_domain_name}-${terraform.workspace}"
+}
+
 resource "aws_cloudfront_distribution" "this" {
+  comment = "Sanjai CloudFront Distribution for ${terraform.workspace} environment"
+
+  tags = var.cloudfront_tags 
 
   origin {
-    domain_name              = var.s3_domain_name
+    domain_name              = local.domain_name
     origin_id                = var.origin_id
     origin_access_control_id = var.origin_access_control_id
     

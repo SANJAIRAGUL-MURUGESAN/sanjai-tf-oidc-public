@@ -1,5 +1,10 @@
+locals {
+  bucket_name = "${var.bucket_name}-${terraform.workspace}"
+}
+
 resource "aws_s3_bucket" "this" {
-  bucket = var.bucket_name
+  bucket = local.bucket_name
+  tags   = var.s3_tags
 }
 
 resource "aws_s3_bucket_ownership_controls" "this" {

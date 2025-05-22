@@ -1,6 +1,6 @@
 bucket_name = "sanjai-workspace-infra-qa"
 object_ownership = "BucketOwnerEnforced"
-versioning_configuration = "Enabled"
+versioning_configuration = true
 oac_name = "sanjai-oac"
 root_object = "index.html"
 price_class = "PriceClass_100"
@@ -11,4 +11,9 @@ origin_shield_value = true
 restriction_type = "blacklist"
 geo_restriction_locations =  ["CN"]
 aliases = [ "sanjairagulm.com" ]
+tags = {
+  Environment = "qa"
+  Owner       = "TDKSensEI"
+  Project     = "frontend-dashboard"
+}
 

@@ -3,10 +3,11 @@ provider "aws" {
 }
 
 module "s3" {
-  source         = "./modules/s3"
-  bucket_name = var.bucket_name
-  object_ownership = var.object_ownership
+  source                   = "./modules/s3"
+  bucket_name              = var.bucket_name
+  object_ownership         = var.object_ownership
   versioning_configuration = var.versioning_configuration
+  s3_tags = var.s3_tags
 }
 
 module "oac" {
@@ -27,6 +28,7 @@ module "cloudfront" {
   restriction_type          = var.restriction_type
   aliases = var.aliases
   geo_restriction_locations = var.geo_restriction_locations
+  cloudfront_tags = var.cloudfront_tags
 }
 
 module "s3_bucket_policy" {

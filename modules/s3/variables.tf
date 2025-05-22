@@ -19,3 +19,8 @@ variable "versioning_configuration" {
   type = bool
   default = true
 }
+
+variable "s3_tags" {
+  type        = map(string)
+  description = "Common tags for all resources."
+}

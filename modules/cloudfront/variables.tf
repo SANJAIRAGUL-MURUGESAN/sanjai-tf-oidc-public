@@ -59,3 +59,9 @@ variable "price_class" {
   type = string
   description = "Price Class for the Edge Location"
 }
+
+variable "cloudfront_tags" {
+  type        = map(string)
+  description = "Tags to apply to CloudFront Distribution."
+  default     = {}
+}
