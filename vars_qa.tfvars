@@ -1,7 +1,7 @@
 // Values for AWS Certificate Manager
 acm_region = "us-east-1"
 primary_domain = "tdkdashboard.com"
-alternative_domains = ["dev.tdkdashboard.com"]
+alternative_domains = []
 acm_tags = {
   Environment = "qa"
   Owner       = "TDKSensEI"
@@ -32,7 +32,7 @@ origin_shield_region = "us-east-1"
 origin_shield_value = true
 restriction_type = "blacklist"
 geo_restriction_locations =  ["CN"]
-aliases = ["tdkdashboard.com","dev.tdkdashboard.com"]
+aliases = ["tdkdashboard.com"]
 cloudfront_tags = {
   Environment = "qa"
   Owner       = "TDKSensEI"
