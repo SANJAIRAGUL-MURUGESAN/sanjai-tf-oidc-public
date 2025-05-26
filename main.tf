@@ -2,6 +2,22 @@ provider "aws" {
   region = "us-east-1"
 }
 
+provider "aws" {
+  alias  = "us_east_1"
+  region = var.acm_region  # Only for ACM to be used with CloudFront
+}
+
+module "acm_cert" {
+  source            = "./modules/acm_certificate"
+  primary_domain    = var.primary_domain
+  alternative_domains = var.alternative_domains
+  acm_tags = var.acm_tags
+
+  providers = {
+    aws = aws.us_east_1
+  }
+}
+
 module "s3" {
   source                   = "./modules/s3"
   bucket_name              = var.bucket_name

@@ -12,7 +12,7 @@ resource "aws_cloudfront_distribution" "this" {
     origin_id                = var.origin_id
     origin_access_control_id = var.origin_access_control_id
     
-    origin_shield {   // Origin shield is an additional caching layer that can help reduce the load on your origin and help protect its availability
+    origin_shield {     // Origin shield is an additional caching layer that can help reduce the load on your origin and help protect its availability
       enabled              = var.origin_shield_value
       origin_shield_region = var.origin_shield_region 
     }
@@ -30,11 +30,20 @@ resource "aws_cloudfront_distribution" "this" {
   default_cache_behavior {
     target_origin_id       = var.origin_id
     viewer_protocol_policy = "redirect-to-https"
-    allowed_methods        = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"] // CloudFront accepts all these HTTP methods from users and forwards them to origin.
-    cached_methods         = ["GET", "HEAD"]                                              // CloudFront caches responses only for GET and HEAD requests since they are static.
+    allowed_methods        = ["GET", "HEAD"]     // allowed_methods enable to allow this methods into origin
+    cached_methods         = ["GET", "HEAD"]     // cached_methods enables to cache the allowed method responses in Edge Locations                                 
     compress               = true
+
+    forwarded_values {
+      query_string = false
+
+      cookies {
+        forward = "none"
+      }
+    }
+    
     min_ttl     = 0
-    default_ttl = 3600     # 3600 seconds = 1 hour
+    default_ttl = 3600                           // 3600 seconds = 1 hour
     max_ttl     = 3600
   }
 
