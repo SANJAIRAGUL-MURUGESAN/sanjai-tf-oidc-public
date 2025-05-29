@@ -20,7 +20,6 @@ variable "alternative_domains" {
 variable "acm_tags" {
   type        = map(string)
   description = "Tags to apply to s3 Bucket"
-  default     = []
 }
 
 // Variables for s3
