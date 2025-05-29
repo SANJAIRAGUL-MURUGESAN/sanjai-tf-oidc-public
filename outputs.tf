@@ -5,3 +5,7 @@ output "bucket_name" {
 output "dns_validation_records" {
   value = module.acm_cert.domain_validation_options
 }
+
+output "cloudfront_distribution_id" {
+  value = module.acm_cert.cloudfront_distribution_id
+}

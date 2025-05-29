@@ -1,4 +1,4 @@
-output "certificate_arn" {
+output "cloudfront_distribution_id" {
   description = "ARN of the ACM certificate"
   value       = aws_acm_certificate.this.arn
 }
