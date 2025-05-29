@@ -47,6 +47,24 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -input=false tfplan
 
+      - name: Get CloudFront Distribution ID
+        id: get_distribution_id
+        run: |
+          id=$(terraform output -raw cloudfront_distribution_id 2>/dev/null || echo "")
+          echo "CloudFront ID: $id"
+          if [[ -n "$id" ]]; then
+            echo "DISTRIBUTION_ID=$id" >> $GITHUB_ENV
+          else
+            echo "CloudFront distribution ID not found"
+            exit 1
+            
+      - name: Invalidate CloudFront Cache
+        run: |
+          echo "Invalidating CloudFront distribution: $DISTRIBUTION_ID"
+          aws cloudfront create-invalidation \
+            --distribution-id "$DISTRIBUTION_ID" \
+            --paths "/*"
+
   qa:
     if: github.ref_name == 'main'
     runs-on: ubuntu-latest

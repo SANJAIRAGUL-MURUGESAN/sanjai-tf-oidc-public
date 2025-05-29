@@ -1,7 +1,7 @@
 // Values for AWS Certificate Manager
 acm_region = "us-east-1"
 primary_domain = "tdkdashboard.com"
-alternative_domains = []
+alternative_domains = ["dev.tdkdashboard.com"]
 acm_tags = {
   Environment = "qa"
   Owner       = "TDKSensEI"
