@@ -173,7 +173,7 @@ jobs:
           else
             echo "CloudFront distribution ID not found"
             exit 1
-            
+          fi   
       - name: Invalidate CloudFront Cache
         run: |
           echo "Invalidating CloudFront distribution: $DISTRIBUTION_ID"
