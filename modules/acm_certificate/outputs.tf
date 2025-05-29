@@ -1,6 +1,6 @@
 output "cloudfront_distribution_id" {
   description = "ARN of the ACM certificate"
-  value       = aws_acm_certificate.this.arn
+  value       = aws_acm_certificate.this.id
 }
 
 output "domain_validation_options" {
