@@ -105,7 +105,8 @@ jobs:
         id: get_distribution_id
         shell: bash
         run: |
-          id=$(terraform output cloudfront_distribution_id | head -n 1 | tr -d '\r')
+          set -e
+          id=$(terraform output -raw cloudfront_distribution_id 2>/dev/null || echo "")
           echo "CloudFront ID: $id"
           if [[ -n "$id" ]]; then
             echo "DISTRIBUTION_ID=$id" >> $GITHUB_ENV
