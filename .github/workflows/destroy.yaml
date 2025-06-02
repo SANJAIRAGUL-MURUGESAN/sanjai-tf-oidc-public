@@ -1,7 +1,7 @@
 name: Terraform Destroy QA
 
 on:
-  workflow_dispatch: # Manual trigger from GitHub UI
+  workflow_dispatch: # Manual trigger from GitHub UI.
 
 jobs:
   destroy_qa:
@@ -39,3 +39,5 @@ jobs:
 
       - name: Delete Workspace
         run: terraform workspace delete qa
+
+
