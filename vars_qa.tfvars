@@ -39,6 +39,57 @@ cloudfront_tags = {
   Project     = "frontend-dashboard"
 }
 
+// Values for WAF
+waf_name = "sanjai-waf"
+waf_description = "waf for sanjai cloudfront distribution"
+waf_scope  = "CLOUDFRONT"
+waf_metric_name = "sanjai-waf-metric"
+waf_cloudwatch_metrics = true
+waf_sampled_requests = false
+waf_log_group_name = "sanjai-waf-log-group"
+waf_log_retention_days = 30
+waf_tags = {
+  Environment = "qa"
+  Owner       = "TDKSensEI"
+  Project     = "frontend-dashboard"
+}
+managed_rules = managed_rules = [
+    {
+      name            = "AWS-AWSManagedRulesCommonRuleSet"
+      priority        = 0
+      rule_group_name = "AWSManagedRulesCommonRuleSet"
+      vendor_name     = "AWS"
+      metric_name     = "AWSManagedRulesCommonRuleSet"
+    },
+    {
+      name            = "AWS-AWSManagedRulesKnownBadInputsRuleSet"
+      priority        = 1
+      rule_group_name = "AWSManagedRulesKnownBadInputsRuleSet"
+      vendor_name     = "AWS"
+      metric_name     = "AWSManagedRulesKnownBadInputsRuleSet"
+    },
+    {
+      name            = "AWSManagedRulesSQLiRuleSet"
+      priority        = 2
+      rule_group_name = "AWSManagedRulesSQLiRuleSet"
+      vendor_name     = "AWS"
+      metric_name     = "AWSManagedRulesSQLiRuleSet"
+    },
+    {
+      name            = "AWSManagedRulesAmazonIpReputationList"
+      priority        = 3
+      rule_group_name = "AWSManagedRulesAmazonIpReputationList"
+      vendor_name     = "AWS"
+      metric_name     = "AWSManagedRulesAmazonIpReputationList"
+    },
+    {
+      name            = "AWSManagedRulesBotControlRuleSet"
+      priority        = 4
+      rule_group_name = "AWSManagedRulesBotControlRuleSet"
+      vendor_name     = "AWS"
+      metric_name     = "AWSManagedRulesBotControlRuleSet"
+    }
+  ]
 
 
 
