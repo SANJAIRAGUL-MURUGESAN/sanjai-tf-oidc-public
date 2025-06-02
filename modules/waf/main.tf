@@ -58,7 +58,7 @@ resource "aws_cloudwatch_log_resource_policy" "waf_logging" {
           Service = "delivery.logs.amazonaws.com"
         },
         Action   = "logs:PutLogEvents",
-        Resource = "${aws_cloudwatch_log_group.waf_logs.arn}:*",
+        Resource = aws_cloudwatch_log_group.waf_logs.arn,
         Condition = {
           ArnLike = {
             "aws:SourceArn" = aws_wafv2_web_acl.this.arn
