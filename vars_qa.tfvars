@@ -26,7 +26,7 @@ oac_name = "sanjai-oac"
 // Values for CloudFront
 root_object = "index.html"
 price_class = "PriceClass_100"
-acm_certificate_arn = "arn:aws:acm:us-east-1:853973692277:certificate/1b785f6b-0004-40dd-8ddf-261553f2a89e"
+acm_certificate_arn = "arn:aws:acm:us-east-1:853973692277:certificate/05dfa9e9-a788-4e06-8d80-108383713757"
 origin_id = "sanjai-s3-frontend-origin"
 origin_shield_region = "us-east-1"
 origin_shield_value = true
