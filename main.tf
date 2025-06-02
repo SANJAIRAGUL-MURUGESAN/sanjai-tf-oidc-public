@@ -54,12 +54,12 @@ module "s3_bucket_policy" {
   cloudfront_distribution_arn = module.cloudfront.cloudfront_distribution_arn
 }
 
-module "waf_log_group" {
-  source            = "./modules/cloudwatch_loggroup"
-  cloudwatch_loggroup_name =  var.cloudwatch_loggroup_name
-  cloudwatch_loggroup_retention_in_days = var.cloudwatch_loggroup_retention_in_days
-  cloudwatch_tags = var.cloudwatch_tags
-}
+# module "waf_log_group" {
+#   source            = "./modules/cloudwatch_loggroup"
+#   cloudwatch_loggroup_name =  var.cloudwatch_loggroup_name
+#   cloudwatch_loggroup_retention_in_days = var.cloudwatch_loggroup_retention_in_days
+#   cloudwatch_tags = var.cloudwatch_tags
+# }
 
 module "waf" {
   source = "./modules/waf"
