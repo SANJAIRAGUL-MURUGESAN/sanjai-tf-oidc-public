@@ -39,13 +39,23 @@ cloudfront_tags = {
   Project     = "frontend-dashboard"
 }
 
+// Values for Cloudwatch Log group
+
+cloudwatch_loggroup_name = "sanjai-cloudwatch-loggroup"
+cloudwatch_loggroup_retention_in_days = 30
+cloudwatch_tags = {
+  Environment = "qa"
+  Owner       = "TDKSensEI"
+  Project     = "frontend-dashboard"
+}
+
 // Values for WAF
 waf_name = "sanjai-waf"
 waf_description = "waf for sanjai cloudfront distribution"
 waf_scope  = "CLOUDFRONT"
 waf_metric_name = "sanjai-waf-metric"
 waf_cloudwatch_metrics = true
-waf_sampled_requests = false
+waf_sampled_requests = true
 waf_log_group_name = "sanjai-waf-log-group"
 waf_log_retention_days = 30
 waf_tags = {
@@ -61,7 +71,7 @@ managed_rules = [
       vendor_name     = "AWS"
       metric_name     = "AWSManagedRulesCommonRuleSet"
       cloudwatch_metrics_enabled = true
-      sampled_requests_enabled = false
+      sampled_requests_enabled = true
     },
     {
       name            = "AWS-AWSManagedRulesKnownBadInputsRuleSet"
@@ -70,7 +80,7 @@ managed_rules = [
       vendor_name     = "AWS"
       metric_name     = "AWSManagedRulesKnownBadInputsRuleSet"
       cloudwatch_metrics_enabled = true
-      sampled_requests_enabled = false
+      sampled_requests_enabled = true
     },
     {
       name            = "AWSManagedRulesSQLiRuleSet"
@@ -79,7 +89,7 @@ managed_rules = [
       vendor_name     = "AWS"
       metric_name     = "AWSManagedRulesSQLiRuleSet"
       cloudwatch_metrics_enabled = true
-      sampled_requests_enabled = false
+      sampled_requests_enabled = true
     },
     {
       name            = "AWSManagedRulesAmazonIpReputationList"
@@ -88,7 +98,7 @@ managed_rules = [
       vendor_name     = "AWS"
       metric_name     = "AWSManagedRulesAmazonIpReputationList"
       cloudwatch_metrics_enabled = true
-      sampled_requests_enabled = false
+      sampled_requests_enabled = true
     },
     {
       name            = "AWSManagedRulesBotControlRuleSet"
@@ -97,7 +107,7 @@ managed_rules = [
       vendor_name     = "AWS"
       metric_name     = "AWSManagedRulesBotControlRuleSet"
       cloudwatch_metrics_enabled = true
-      sampled_requests_enabled = false
+      sampled_requests_enabled = true
     }
   ]
 
