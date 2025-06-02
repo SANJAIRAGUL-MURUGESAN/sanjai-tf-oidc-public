@@ -41,13 +41,13 @@ cloudfront_tags = {
 
 // Values for Cloudwatch Log group(for waf)
 
-cloudwatch_loggroup_name = "sanjai-cloudwatch-log-group"
-cloudwatch_loggroup_retention_in_days = 30
-cloudwatch_tags = {
-  Environment = "qa"
-  Owner       = "TDKSensEI"
-  Project     = "frontend-dashboard"
-}
+# cloudwatch_loggroup_name = "sanjai-cloudwatch-log-group"
+# cloudwatch_loggroup_retention_in_days = 30
+# cloudwatch_tags = {
+#   Environment = "qa"
+#   Owner       = "TDKSensEI"
+#   Project     = "frontend-dashboard"
+# }
 
 // Values for WAF
 waf_name = "sanjai-waf"
@@ -56,7 +56,7 @@ waf_scope  = "CLOUDFRONT"
 waf_metric_name = "sanjai-waf-metric"
 waf_cloudwatch_metrics = true
 waf_sampled_requests = true
-waf_log_group_name = "sanjai-waf-log-group"
+waf_log_group_name = "aws-waf-logs-sanjai-log-group"
 waf_log_retention_days = 30
 waf_tags = {
   Environment = "qa"
