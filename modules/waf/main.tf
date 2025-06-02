@@ -62,12 +62,15 @@ resource "aws_cloudwatch_log_resource_policy" "waf_logging" {
         Sid       = "AWSWAFLoggingPermissions",
         Effect    = "Allow",
         Principal = {
-          Service = "delivery.logs.amazonaws.com"
+          Service = "waf.amazonaws.com"
         },
-        Action   = "logs:PutLogEvents",
-        Resource = aws_cloudwatch_log_group.waf_logs.arn,
+        Action   = [
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ],
+        Resource = "${aws_cloudwatch_log_group.waf_logs.arn}:*",
         Condition = {
-          ArnLike = {
+          ArnEquals = {
             "aws:SourceArn" = aws_wafv2_web_acl.this.arn
           }
         }
@@ -77,7 +80,10 @@ resource "aws_cloudwatch_log_resource_policy" "waf_logging" {
 }
 
 resource "aws_wafv2_web_acl_logging_configuration" "this" {
-  log_destination_configs = [aws_cloudwatch_log_group.waf_logs.arn]
+  # log_destination_configs = [aws_cloudwatch_log_group.waf_logs.arn]
+  log_destination_configs = [
+    replace(aws_cloudwatch_log_group.waf_logs.arn, ":*", "")
+  ]
   resource_arn            = aws_wafv2_web_acl.this.arn
   depends_on = [aws_cloudwatch_log_resource_policy.waf_logging]
 }
