@@ -41,7 +41,7 @@ cloudfront_tags = {
 
 // Values for Cloudwatch Log group
 
-cloudwatch_loggroup_name = "sanjai-cloudwatch-loggroup"
+cloudwatch_loggroup_name = "sanjai-cloudwatch-log-group"
 cloudwatch_loggroup_retention_in_days = 30
 cloudwatch_tags = {
   Environment = "qa"
