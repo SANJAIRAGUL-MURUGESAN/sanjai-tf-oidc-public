@@ -3,6 +3,10 @@ name: Terraform Destroy QA
 on:
   workflow_dispatch: # Manual trigger from GitHub UI.
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   destroy_qa:
     runs-on: ubuntu-latest
