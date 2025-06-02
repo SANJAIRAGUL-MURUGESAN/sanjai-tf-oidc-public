@@ -1,3 +1,8 @@
+provider "aws" {
+  alias = "us_east_1"
+  region = "us-east-1"
+}
+
 resource "aws_wafv2_web_acl" "this" {
   name        = var.waf_name
   description = var.waf_description
@@ -42,11 +47,13 @@ resource "aws_wafv2_web_acl" "this" {
 }
 
 resource "aws_cloudwatch_log_group" "waf_logs" {
+  provider          = aws.us_east_1
   name              = var.waf_log_group_name
   retention_in_days = var.waf_log_retention_days
 }
 
 resource "aws_cloudwatch_log_resource_policy" "waf_logging" {
+  provider = aws.us_east_1
   policy_name = "sanjai-waf-logging-policy"
   policy_document = jsonencode({
     Version = "2012-10-17",
