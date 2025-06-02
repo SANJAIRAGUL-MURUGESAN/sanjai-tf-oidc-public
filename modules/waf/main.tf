@@ -63,7 +63,7 @@ data "aws_iam_policy_document" "waf_logging" {
     effect = "Allow"
     principals {
       type        = "Service"
-      identifiers = ["delivery.logs.amazonaws.com"]
+      identifiers = ["waf.amazonaws.com"]
     }
 
     actions = [
