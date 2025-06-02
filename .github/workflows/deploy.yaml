@@ -262,6 +262,7 @@ jobs:
               echo "KEY=dev/terraform.tfstate" >> $GITHUB_ENV
               echo "BUCKET=${{ vars.AWS_DEV_QA_STATE_BUCKET }}" >> $GITHUB_ENV
               echo "DDB_TABLE=${{ vars.AWS_DEV_QA_LOCK_TABLE }}" >> $GITHUB_ENV
+              echo "AWS_REGION=${{ vars.AWS_REGION_ACCOUNT_A }}" >> $GITHUB_ENV
               ;;
             qa)
               echo "ROLE=${{ secrets.DEV_ASSUME_ROLE_ARN }}" >> $GITHUB_ENV
@@ -269,6 +270,7 @@ jobs:
               echo "KEY=qa/terraform.tfstate" >> $GITHUB_ENV
               echo "BUCKET=${{ vars.AWS_DEV_QA_STATE_BUCKET }}" >> $GITHUB_ENV
               echo "DDB_TABLE=${{ vars.AWS_DEV_QA_LOCK_TABLE }}" >> $GITHUB_ENV
+              echo "AWS_REGION=${{ vars.AWS_REGION_ACCOUNT_A }}" >> $GITHUB_ENV
               ;;
             preprod)
               echo "ROLE=arn:aws:iam::339712902923:role/cbm-fndv2-use1-dev-oidc-role-infra-repo" >> $GITHUB_ENV
@@ -276,6 +278,7 @@ jobs:
               echo "KEY=preprod/terraform.tfstate" >> $GITHUB_ENV
               echo "BUCKET=${{ vars.STATE_BUCKET_NAME_B }}" >> $GITHUB_ENV
               echo "DDB_TABLE=${{ vars.DYNAMODB_TABLE_NAME_B }}" >> $GITHUB_ENV
+              echo "AWS_REGION=${{ vars.AWS_REGION_ACCOUNT_B }}" >> $GITHUB_ENV
               ;;
             prod)
               echo "ROLE=arn:aws:iam::339712902923:role/cbm-fndv2-use1-dev-oidc-role-infra-repo" >> $GITHUB_ENV
@@ -283,6 +286,7 @@ jobs:
               echo "KEY=prod/terraform.tfstate" >> $GITHUB_ENV
               echo "BUCKET=${{ vars.STATE_BUCKET_NAME_B }}" >> $GITHUB_ENV
               echo "DDB_TABLE=${{ vars.DYNAMODB_TABLE_NAME_B }}" >> $GITHUB_ENV
+              echo "AWS_REGION=${{ vars.AWS_REGION_ACCOUNT_B }}" >> $GITHUB_ENV
               ;;
             *)
               echo "Invalid environment"
@@ -293,8 +297,8 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ env.ROLE }}
-          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: arn:aws:iam::853973692277:role/sanjai-oidc-2
+          aws-region: ${{ vars.AWS_REGION_ACCOUNT_A }}
 
       - name: Terraform Init
         run: |
@@ -310,3 +314,6 @@ jobs:
 
       - name: Terraform Destroy
         run: terraform destroy -auto-approve -var-file=${{ env.TFVARS }}
+
+      - name: Delete Workspace
+        run: terraform workspace delete ${{ github.event.inputs.destroy_env }} || echo "Workspace already deleted or not found"
