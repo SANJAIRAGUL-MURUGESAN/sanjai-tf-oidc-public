@@ -52,38 +52,56 @@ resource "aws_cloudwatch_log_group" "waf_logs" {
   retention_in_days = var.waf_log_retention_days
 }
 
-resource "aws_cloudwatch_log_resource_policy" "waf_logging" {
-  provider = aws.us_east_1
-  policy_name = "sanjai-waf-logging-policy"
-  policy_document = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Sid       = "AWSWAFLoggingPermissions",
-        Effect    = "Allow",
-        Principal = {
-          Service = "waf.amazonaws.com"
-        },
-        Action   = [
-          "logs:CreateLogStream",
-          "logs:PutLogEvents"
-        ],
-        Resource = "${aws_cloudwatch_log_group.waf_logs.arn}:*",
-        Condition = {
-          ArnEquals = {
-            "aws:SourceArn" = aws_wafv2_web_acl.this.arn
-          }
-        }
-      }
+data "aws_region" "current" {}
+
+data "aws_caller_identity" "current" {}
+
+data "aws_iam_policy_document" "waf_logging" {
+  version = "2012-10-17"
+
+  statement {
+    effect = "Allow"
+    principals {
+      type        = "Service"
+      identifiers = ["delivery.logs.amazonaws.com"]
+    }
+
+    actions = [
+      "logs:CreateLogStream",
+      "logs:PutLogEvents"
     ]
-  })
+
+    resources = [
+      "${aws_cloudwatch_log_group.waf_logs.arn}:*"
+    ]
+
+    condition {
+      test     = "ArnLike"
+      variable = "aws:SourceArn"
+      values   = [
+        "arn:aws:wafv2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:global/webacl/*"
+      ]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "aws:SourceAccount"
+      values   = [
+        data.aws_caller_identity.current.account_id
+      ]
+    }
+  }
+}
+
+resource "aws_cloudwatch_log_resource_policy" "waf_logging" {
+  policy_name     = "aws-waf-logs-sanjai-log-group"
+  policy_document = data.aws_iam_policy_document.waf_logging.json
 }
 
 resource "aws_wafv2_web_acl_logging_configuration" "this" {
   log_destination_configs = [aws_cloudwatch_log_group.waf_logs.arn]
-  #  log_destination_configs = [
-  #   "${aws_cloudwatch_log_group.waf_logs.arn}:*"
-  # ]
   resource_arn            = aws_wafv2_web_acl.this.arn
+
   depends_on = [aws_cloudwatch_log_resource_policy.waf_logging]
 }
+
