@@ -60,6 +60,8 @@ managed_rules = [
       rule_group_name = "AWSManagedRulesCommonRuleSet"
       vendor_name     = "AWS"
       metric_name     = "AWSManagedRulesCommonRuleSet"
+      cloudwatch_metrics_enabled = true
+      sampled_requests_enabled = false
     },
     {
       name            = "AWS-AWSManagedRulesKnownBadInputsRuleSet"
@@ -67,6 +69,8 @@ managed_rules = [
       rule_group_name = "AWSManagedRulesKnownBadInputsRuleSet"
       vendor_name     = "AWS"
       metric_name     = "AWSManagedRulesKnownBadInputsRuleSet"
+      cloudwatch_metrics_enabled = true
+      sampled_requests_enabled = false
     },
     {
       name            = "AWSManagedRulesSQLiRuleSet"
@@ -74,6 +78,8 @@ managed_rules = [
       rule_group_name = "AWSManagedRulesSQLiRuleSet"
       vendor_name     = "AWS"
       metric_name     = "AWSManagedRulesSQLiRuleSet"
+      cloudwatch_metrics_enabled = true
+      sampled_requests_enabled = false
     },
     {
       name            = "AWSManagedRulesAmazonIpReputationList"
@@ -81,6 +87,8 @@ managed_rules = [
       rule_group_name = "AWSManagedRulesAmazonIpReputationList"
       vendor_name     = "AWS"
       metric_name     = "AWSManagedRulesAmazonIpReputationList"
+      cloudwatch_metrics_enabled = true
+      sampled_requests_enabled = false
     },
     {
       name            = "AWSManagedRulesBotControlRuleSet"
@@ -88,6 +96,8 @@ managed_rules = [
       rule_group_name = "AWSManagedRulesBotControlRuleSet"
       vendor_name     = "AWS"
       metric_name     = "AWSManagedRulesBotControlRuleSet"
+      cloudwatch_metrics_enabled = true
+      sampled_requests_enabled = false
     }
   ]
 
