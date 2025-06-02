@@ -69,7 +69,7 @@ module "waf" {
   waf_metric_name     = var.waf_metric_name
   waf_cloudwatch_metrics = var.waf_cloudwatch_metrics
   waf_sampled_requests = var.waf_sampled_requests
-  waf_log_group_name  = module.waf_log_group.aws_cloudwatch_log_group_name
+  waf_log_group_name  = var.waf_log_group_name
   waf_log_retention_days = var.waf_log_retention_days
   waf_tags = var.waf_tags
   managed_rules = var.managed_rules
