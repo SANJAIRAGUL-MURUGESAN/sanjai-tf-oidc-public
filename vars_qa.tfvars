@@ -53,7 +53,7 @@ waf_tags = {
   Owner       = "TDKSensEI"
   Project     = "frontend-dashboard"
 }
-managed_rules = managed_rules = [
+managed_rules = [
     {
       name            = "AWS-AWSManagedRulesCommonRuleSet"
       priority        = 0
