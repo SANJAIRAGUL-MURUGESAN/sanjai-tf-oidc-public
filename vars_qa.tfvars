@@ -39,7 +39,7 @@ cloudfront_tags = {
   Project     = "frontend-dashboard"
 }
 
-// Values for Cloudwatch Log group
+// Values for Cloudwatch Log group(for waf)
 
 cloudwatch_loggroup_name = "sanjai-cloudwatch-log-group"
 cloudwatch_loggroup_retention_in_days = 30
