@@ -1,7 +1,7 @@
 name: Terraform Destroy QA
 
 on:
-  workflow_dispatch: # Manual trigger from GitHub UI
+  workflow_dispatch: # Manual trigger from GitHub UI.
 
 permissions:
   id-token: write
