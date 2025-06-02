@@ -65,3 +65,8 @@ variable "cloudfront_tags" {
   description = "Tags to apply to CloudFront Distribution."
   default     = {}
 }
+
+variable "waf_arn" {
+  type = string
+  description = "ARN of the WAF"
+}

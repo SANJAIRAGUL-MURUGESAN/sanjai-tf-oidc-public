@@ -45,6 +45,7 @@ module "cloudfront" {
   aliases = var.aliases
   geo_restriction_locations = var.geo_restriction_locations
   cloudfront_tags = var.cloudfront_tags
+  waf_arn = module.waf.waf_acl_arn
 }
 
 module "s3_bucket_policy" {
