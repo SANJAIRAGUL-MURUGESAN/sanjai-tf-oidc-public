@@ -46,7 +46,31 @@ resource "aws_cloudwatch_log_group" "waf_logs" {
   retention_in_days = var.waf_log_retention_days
 }
 
+resource "aws_cloudwatch_log_resource_policy" "waf_logging" {
+  policy_name = "sanjai-waf-logging-policy"
+  policy_document = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Sid       = "AWSWAFLoggingPermissions",
+        Effect    = "Allow",
+        Principal = {
+          Service = "delivery.logs.amazonaws.com"
+        },
+        Action   = "logs:PutLogEvents",
+        Resource = "${aws_cloudwatch_log_group.waf_logs.arn}:*",
+        Condition = {
+          ArnLike = {
+            "aws:SourceArn" = aws_wafv2_web_acl.this.arn
+          }
+        }
+      }
+    ]
+  })
+}
+
 resource "aws_wafv2_web_acl_logging_configuration" "this" {
-  log_destination_configs = ["${aws_cloudwatch_log_group.waf_logs.arn}:*"]
+  log_destination_configs = [aws_cloudwatch_log_group.waf_logs.arn]
   resource_arn            = aws_wafv2_web_acl.this.arn
+  depends_on = [aws_cloudwatch_log_resource_policy.waf_logging]
 }
