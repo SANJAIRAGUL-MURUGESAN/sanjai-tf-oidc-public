@@ -76,4 +76,3 @@ module "waf" {
   managed_rules = var.managed_rules
 }
 
-//
