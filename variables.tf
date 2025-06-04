@@ -99,6 +99,7 @@ variable "geo_restriction_locations" {
 variable "acm_certificate_arn" {
   type        = string
   description = "ACM certificate ARN for HTTPS"
+  default = null
 }
 
 variable "root_object" {
