@@ -51,10 +51,27 @@ resource "aws_cloudfront_distribution" "this" {
   default_root_object = var.root_object 
   price_class         = var.price_class
 
-  viewer_certificate {
-    acm_certificate_arn            = var.acm_certificate_arn
-    ssl_support_method             = "sni-only"
-    minimum_protocol_version       = "TLSv1.2_2021"
+  # viewer_certificate {
+  #   acm_certificate_arn            = var.acm_certificate_arn
+  #   ssl_support_method             = "sni-only"
+  #   minimum_protocol_version       = "TLSv1.2_2021"
+  # }
+
+  dynamic "viewer_certificate" {
+    for_each = (var.acm_certificate_arn != null && length(var.aliases) > 0) ? [1] : []
+    content {
+      acm_certificate_arn      = var.acm_certificate_arn
+      ssl_support_method       = "sni-only"
+      minimum_protocol_version = "TLSv1.2_2021"
+    }
+  }
+
+  # Viewer Certificate for CloudFront Default Certificate
+  dynamic "viewer_certificate" {
+    for_each = (var.acm_certificate_arn == null && length(var.aliases) == 0) ? [1] : []
+    content {
+      cloudfront_default_certificate = true
+    }
   }
 
   web_acl_id = var.waf_arn
