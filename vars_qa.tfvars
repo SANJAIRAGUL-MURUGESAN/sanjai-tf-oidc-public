@@ -26,13 +26,13 @@ oac_name = "sanjai-oac"
 // Values for CloudFront
 root_object = "index.html"
 price_class = "PriceClass_100"
-# acm_certificate_arn = ""
+acm_certificate_arn = "arn:aws:acm:us-east-1:853973692277:certificate/3a3455bf-06f4-404d-9ce7-f4ea70065c3a"
 origin_id = "sanjai-s3-frontend-origin"
 origin_shield_region = "us-east-1"
 origin_shield_value = true
 restriction_type = "blacklist"
 geo_restriction_locations =  ["CN"]
-aliases = []
+aliases = ["tdkdashboard.com"]
 cloudfront_tags = {
   Environment = "qa"
   Owner       = "TDKSensEI"
