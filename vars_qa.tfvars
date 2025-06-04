@@ -38,7 +38,7 @@ cloudfront_tags = {
   Owner       = "TDKSensEI"
   Project     = "frontend-dashboard"
 }
-acm_status = true
+acm_status = false
 
 // Values for Cloudwatch Log group(for waf)
 
