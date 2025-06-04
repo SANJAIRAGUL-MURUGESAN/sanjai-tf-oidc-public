@@ -37,7 +37,7 @@ module "cloudfront" {
   origin_access_control_id  = module.oac.id
   root_object               = var.root_object
   price_class               = var.price_class
-  acm_certificate_arn       = var.acm_certificate_arn
+  acm_certificate_arn       = var.acm_status ? module.acm_cert.certificate_arn : null
   origin_id                 = var.origin_id
   origin_shield_region      = var.origin_shield_region
   origin_shield_value       = var.origin_shield_value

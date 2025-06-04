@@ -203,3 +203,9 @@ variable "waf_sampled_requests" {
   description = "WAF Sample Requested Enable or Disable value"
   default = true
 }
+
+variable "acm_status" {
+  type = bool
+  description = "Specifies whether ACM Certificate status is issued or not"
+  default = false
+}
