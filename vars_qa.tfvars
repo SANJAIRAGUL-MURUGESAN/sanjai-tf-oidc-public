@@ -32,13 +32,13 @@ origin_shield_region = "us-east-1"
 origin_shield_value = true
 restriction_type = "blacklist"
 geo_restriction_locations =  ["CN"]
-aliases = []
+aliases = ["tdkdashboard.com"]
 cloudfront_tags = {
   Environment = "qa"
   Owner       = "TDKSensEI"
   Project     = "frontend-dashboard"
 }
-acm_status = false
+acm_status = true
 
 // Values for Cloudwatch Log group(for waf)
 

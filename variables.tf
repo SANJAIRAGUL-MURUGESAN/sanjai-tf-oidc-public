@@ -96,11 +96,11 @@ variable "geo_restriction_locations" {
   default     = []
 }
 
-variable "acm_certificate_arn" {
-  type        = string
-  description = "ACM certificate ARN for HTTPS"
-  default = null
-}
+# variable "acm_certificate_arn" {
+#   type        = string
+#   description = "ACM certificate ARN for HTTPS"
+#   default = null
+# }
 
 variable "root_object" {
   type        = string
