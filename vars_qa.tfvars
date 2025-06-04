@@ -1,7 +1,7 @@
 // Values for AWS Certificate Manager
 acm_region = "us-east-1"
 primary_domain = "tdkdashboard.com"
-alternative_domains = ["dev.tdkdashboard.com"]
+alternative_domains = []
 acm_tags = {
   Environment = "qa"
   Owner       = "TDKSensEI"
@@ -26,13 +26,13 @@ oac_name = "sanjai-oac"
 // Values for CloudFront
 root_object = "index.html"
 price_class = "PriceClass_100"
-acm_certificate_arn = "arn:aws:acm:us-east-1:853973692277:certificate/3aac307e-8f7a-4950-978d-1932c03d535a"
+# acm_certificate_arn = "arn:aws:acm:us-east-1:853973692277:certificate/3aac307e-8f7a-4950-978d-1932c03d535a"
 origin_id = "sanjai-s3-frontend-origin"
 origin_shield_region = "us-east-1"
 origin_shield_value = true
 restriction_type = "blacklist"
 geo_restriction_locations =  ["CN"]
-aliases = ["tdkdashboard.com"]
+aliases = []
 cloudfront_tags = {
   Environment = "qa"
   Owner       = "TDKSensEI"

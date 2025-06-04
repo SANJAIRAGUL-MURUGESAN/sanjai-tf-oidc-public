@@ -193,12 +193,12 @@ variable "waf_log_retention_days" {
 
 variable "waf_cloudwatch_metrics" {
   type = bool
-  description = "WAF Cloudwatch Enable or Diable value"
+  description = "WAF Cloudwatch Enable or Disable value"
   default = true
 }
 
 variable "waf_sampled_requests" {
   type = bool
-  description = "WAF Sample Requested Enable or Diable value"
+  description = "WAF Sample Requested Enable or Disable value"
   default = true
 }
