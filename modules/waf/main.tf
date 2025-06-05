@@ -19,7 +19,8 @@ resource "aws_wafv2_web_acl" "this" {
   }
 
   dynamic "rule" {
-    for_each = var.managed_rules
+    for_each = var.managed_rules != null ? [var.managed_rules] : null
+    
     content {
       name     = rule.value.name
       priority = rule.value.priority

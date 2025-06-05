@@ -74,7 +74,7 @@ module "waf" {
     waf_log_retention_days = var.waf_basic_config.waf_log_retention_days
     waf_cloudwatch_metrics = var.waf_basic_config.waf_cloudwatch_metrics
     waf_sampled_requests = var.waf_basic_config.waf_sampled_requests
-    acm_status = var.waf_basic_config.acm_status
+    # acm_status = var.waf_basic_config.acm_status
   }
   managed_rules = var.managed_rules
 }

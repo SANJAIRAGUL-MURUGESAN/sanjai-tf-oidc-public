@@ -27,6 +27,8 @@ variable "managed_rules" {
 }
 
 
+
+
 # variable "waf_name" {
 #   type        = string
 #   description = "The name of the Web ACL"
