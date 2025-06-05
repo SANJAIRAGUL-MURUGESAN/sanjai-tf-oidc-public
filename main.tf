@@ -64,15 +64,18 @@ module "s3_bucket_policy" {
 
 module "waf" {
   source = "./modules/waf"
-  waf_name            = var.waf_name
-  waf_description     = var.waf_description
-  waf_scope           = var.waf_scope
-  waf_metric_name     = var.waf_metric_name
-  waf_cloudwatch_metrics = var.waf_cloudwatch_metrics
-  waf_sampled_requests = var.waf_sampled_requests
-  waf_log_group_name  = var.waf_log_group_name
-  waf_log_retention_days = var.waf_log_retention_days
-  waf_tags = var.waf_tags
+  waf_basic_config = {
+    waf_name             = var.waf_basic_config.waf_name
+    waf_description      = var.waf_basic_config.waf_description
+    waf_scope            = var.waf_basic_config.waf_scope
+    waf_metric_name      = var.waf_basic_config.waf_metric_name
+    waf_tags             = var.waf_basic_config.waf_tags
+    waf_log_group_name   = var.waf_basic_config.waf_log_group_name
+    waf_log_retention_days = var.waf_basic_config.waf_log_retention_days
+    waf_cloudwatch_metrics = var.waf_basic_config.waf_cloudwatch_metrics
+    waf_sampled_requests = var.waf_basic_config.waf_sampled_requests
+    acm_status = var.waf_basic_config.acm_status
+  }
   managed_rules = var.managed_rules
 }
 

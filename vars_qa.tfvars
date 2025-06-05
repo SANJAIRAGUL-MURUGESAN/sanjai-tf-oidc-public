@@ -112,3 +112,15 @@ managed_rules = [
     }
   ]
 
+waf_basic_config = {
+  waf_name                          = "waf"
+  waf_scope                         = "CLOUDFRONT"
+  waf_metric_name                   = "waf-metric"
+  waf_cloudwatch_metrics            = false
+  waf_sampled_requests              = false
+  waf_log_group_name                = "waf-log-group"
+  waf_log_retention_days            = 30
+  waf_tags                          = {}
+  aws_region                        = "us-east-1"
+  waf_access_cloudwatch_policy_name = "waf-cloudwatch-access-policy"
+}

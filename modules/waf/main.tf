@@ -4,18 +4,18 @@ provider "aws" {
 }
 
 resource "aws_wafv2_web_acl" "this" {
-  name        = var.waf_name
-  description = var.waf_description
-  scope       = var.waf_scope
+  name        = var.waf_basic_config.waf_name
+  description = var.waf_basic_config.waf_description
+  scope       = var.waf_basic_config.waf_scope
 
   default_action {
     allow {}
   }
 
   visibility_config {
-    cloudwatch_metrics_enabled = var.waf_cloudwatch_metrics
-    metric_name                = var.waf_metric_name
-    sampled_requests_enabled   = var.waf_sampled_requests
+    cloudwatch_metrics_enabled = var.waf_basic_config.waf_cloudwatch_metrics
+    metric_name                = var.waf_basic_config.waf_metric_name
+    sampled_requests_enabled   = var.waf_basic_config.sampled_requests_enabled
   }
 
   dynamic "rule" {
@@ -43,13 +43,13 @@ resource "aws_wafv2_web_acl" "this" {
     }
   }
 
-  tags = var.waf_tags
+  tags = var.waf_basic_config.waf_tags
 }
 
 resource "aws_cloudwatch_log_group" "waf_logs" {
   provider          = aws.us_east_1
-  name              = var.waf_log_group_name
-  retention_in_days = var.waf_log_retention_days
+  name              = var.waf_basic_config.waf_log_group_name
+  retention_in_days = var.waf_basic_config.waf_log_retention_days
 }
 
 data "aws_region" "current" {}
