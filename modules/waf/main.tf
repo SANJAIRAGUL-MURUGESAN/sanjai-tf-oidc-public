@@ -20,7 +20,6 @@ resource "aws_wafv2_web_acl" "this" {
 
   dynamic "rule" {
     for_each = var.managed_rules != null ? [var.managed_rules] : null
-    
     content {
       name     = rule.value.name
       priority = rule.value.priority
@@ -108,3 +107,4 @@ resource "aws_wafv2_web_acl_logging_configuration" "this" {
   depends_on = [aws_cloudwatch_log_resource_policy.waf_logging]
 }
 
+//
